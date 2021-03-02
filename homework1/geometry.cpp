@@ -54,6 +54,7 @@ PolygonalChain::PolygonalChain(const PolygonalChain &other) { //copy constructor
 }
 
 PolygonalChain& PolygonalChain::operator=(const PolygonalChain &other) { //overloading of =
+    //todo memory leak
     this->size = other.size;
     this->points = new Point[other.size];
     for (int i = 0; i < other.size; i++) {
@@ -98,6 +99,7 @@ double ClosedPolygonalChain::perimeter() const {
 Polygon::Polygon(const int &size, Point* newPoints) : ClosedPolygonalChain(size, newPoints) {}
 
 double Polygon::area() const {
+	//todo ar int
     double ar = 0;
     for (int i = 0; i < this->getN() - 1; i++) {
         ar += this->getPoint(i).getX() * this->getPoint(i + 1).getY() -
@@ -114,6 +116,7 @@ bool Triangle::hasRightAngle() const {
     Point p1 (this->getPoint(0).getX() - this->getPoint(1).getX(), this->getPoint(0).getY() - this->getPoint(1).getY());
     Point p2 (this->getPoint(1).getX() - this->getPoint(2).getX(), this->getPoint(1).getY() - this->getPoint(2).getY());
     Point p3 (this->getPoint(0).getX() - this->getPoint(2).getX(), this->getPoint(0).getY() - this->getPoint(2).getY());
+    //todo return expression
     if (isCosZero(p1, p2) || isCosZero(p2, p3) || isCosZero(p1, p3))
         return true;
     else

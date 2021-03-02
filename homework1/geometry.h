@@ -22,6 +22,7 @@ private:
     Point *points;
 public:
     PolygonalChain(); //default constructor
+    //int by value
     PolygonalChain(const int &size, Point* newPoints); //constructor using data
     PolygonalChain(const PolygonalChain &other); //copy constructor
     PolygonalChain& operator=(const PolygonalChain &other); //overloading of =
@@ -40,6 +41,7 @@ public:
 class Polygon : public ClosedPolygonalChain {
 public:
     Polygon(const int &size, Point *newPoints); //constructor using data
+    //todo virtual
     double area() const;
 };
 
