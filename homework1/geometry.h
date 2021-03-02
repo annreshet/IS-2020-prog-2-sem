@@ -34,7 +34,7 @@ public:
 class ClosedPolygonalChain : public PolygonalChain {
 public:
     ClosedPolygonalChain(const int &newSize, Point *newPoints);  //constructor using data
-    virtual double perimeter() const;
+    double perimeter() const override;
 };
 
 class Polygon : public ClosedPolygonalChain {
@@ -58,6 +58,6 @@ public:
 class RegularPolygon : public Polygon {
 public:
     RegularPolygon(const int &size, Point *newPoints); //constructor using data
-    double perimeter() const;
+    double perimeter() const override;
     virtual double area() const;
 };
