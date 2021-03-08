@@ -6,7 +6,7 @@ private:
     int x, y;
 public:
     Point(); //default constructor
-    Point(const int &x, const int &y); //constructor using coords
+    Point(int x, int y); //constructor using coords
     Point(const Point &other); //copy constructor
     Point& operator = (const Point &other); //overloading of =
     int getX() const;
@@ -22,8 +22,8 @@ private:
     Point *points;
 public:
     PolygonalChain(); //default constructor
-    //int by value
-    PolygonalChain(const int &size, Point* newPoints); //constructor using data
+    // fixed int by value
+    PolygonalChain(int size, Point* newPoints); //constructor using data
     PolygonalChain(const PolygonalChain &other); //copy constructor
     PolygonalChain& operator=(const PolygonalChain &other); //overloading of =
     int getN() const;
@@ -34,32 +34,32 @@ public:
 
 class ClosedPolygonalChain : public PolygonalChain {
 public:
-    ClosedPolygonalChain(const int &newSize, Point *newPoints);  //constructor using data
+    ClosedPolygonalChain(int newSize, Point *newPoints);  //constructor using data
     double perimeter() const override;
 };
 
 class Polygon : public ClosedPolygonalChain {
 public:
-    Polygon(const int &size, Point *newPoints); //constructor using data
-    //todo virtual
-    double area() const;
+    Polygon(int size, Point *newPoints); //constructor using data
+    //fixed virtual
+    virtual double area() const;
 };
 
 class Triangle : public Polygon {
 public:
-    Triangle(const int &size, Point *newPoints); //constructor using data
+    Triangle(int size, Point *newPoints); //constructor using data
     bool hasRightAngle() const;
 };
 
 class Trapezoid : public Polygon {
 public:
-    Trapezoid(const int &size, Point *newPoints); //constructor using data
+    Trapezoid(int size, Point *newPoints); //constructor using data
     double height() const;
 };
 
 class RegularPolygon : public Polygon {
 public:
-    RegularPolygon(const int &size, Point *newPoints); //constructor using data
+    RegularPolygon(int size, Point *newPoints); //constructor using data
     double perimeter() const override;
-    virtual double area() const;
+    double area() const override;
 };
