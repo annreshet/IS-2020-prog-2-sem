@@ -4,15 +4,7 @@ int Polynomial::getSize() const {
     return maxPwr - minPwr + 1;
 }
 
-int Polynomial::getMinPwr() const {
-    return minPwr;
-}
-
-int Polynomial::getMaxPwr() const {
-    return maxPwr;
-}
-
-Polynomial::Polynomial() { //если что убрать
+Polynomial::Polynomial() {
     minPwr = 0;
     maxPwr = 0;
     array = nullptr;
@@ -63,17 +55,42 @@ Polynomial &Polynomial::operator=(const Polynomial &other) {
     return *this;
 }
 
+Polynomial Polynomial::RemoveZeros(const Polynomial &p) {
+    if (p.array == nullptr)
+        return p;
+    Polynomial temp = p;
+    int cnt1 = 0;
+    int cnt2 = temp.getSize() - 1;
+    while (temp.array[cnt1] == 0){
+        temp.minPwr++;
+        cnt1++;
+    }
+    while (temp.array[cnt2] == 0) {
+        temp.maxPwr--;
+        cnt2--;
+    }
+    int* newArr = new int[temp.getSize()] {0};
+    for (int i = cnt1; i <= cnt2; i++) {
+        newArr[i - cnt1] = temp.array[i];
+    }
+    delete[] temp.array;
+    temp.array = newArr;
+    return temp;
+}
+
 bool Polynomial::operator==(const Polynomial &other) {
     if (this != &other) {
-        if ((this->minPwr == 0 && this->maxPwr == 0) || (other.minPwr == 0 && other.maxPwr == 0)) {
-            if (this->minPwr == 0 && this->maxPwr == 0 && other.minPwr == 0 && other.maxPwr == 0)
+        Polynomial first = RemoveZeros(*this);
+        Polynomial second = RemoveZeros(other);
+        if ((first.minPwr == 0 && first.maxPwr == 0) || (second.minPwr == 0 && second.maxPwr == 0)) {
+            if (first.minPwr == 0 && first.maxPwr == 0 && second.minPwr == 0 && second.maxPwr == 0)
                 return true;
             else
                 return false;
         }
-        if ((this->minPwr == other.minPwr) && (this->maxPwr == other.maxPwr) && (getSize() == other.getSize())) {
-            for (int i = minPwr; i <= maxPwr; i++) {
-                if (this->array[i - minPwr] != other.array[i - minPwr])
+        if ((first.minPwr == second.minPwr) && (first.maxPwr == second.maxPwr) && (first.getSize() == second.getSize())) {
+            for (int i = first.minPwr; i <= first.maxPwr; i++) {
+                if (first.array[i - first.minPwr] != second.array[i - first.minPwr])
                     return false;
             }
             return true;
@@ -186,22 +203,7 @@ Polynomial Polynomial::operator*=(const Polynomial &other) const {
 Polynomial Polynomial::operator/(int number) {
     Polynomial temp = *this;
     std::for_each(temp.array, temp.array + temp.getSize(), [number](int &i) { i /= number; });
-    int cnt1 = 0;
-    int cnt2 = temp.getSize() - 1;
-    while (temp.array[cnt1] == 0){
-        temp.minPwr++;
-        cnt1++;
-    }
-    while (temp.array[cnt2] == 0) {
-        temp.maxPwr--;
-        cnt2--;
-    }
-    int* newArr = new int[temp.getSize()] {0};
-    for (int i = cnt1; i <= cnt2; i++) {
-        newArr[i - cnt1] = temp.array[i];
-    }
-    temp.array = newArr;
-    return temp;
+    return RemoveZeros(temp);
 }
 
 Polynomial Polynomial::operator/=(int number) {
@@ -319,18 +321,3 @@ double Polynomial::get(int i) const {
     }
     return ans;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
