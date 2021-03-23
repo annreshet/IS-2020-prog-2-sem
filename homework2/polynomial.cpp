@@ -55,6 +55,7 @@ Polynomial &Polynomial::operator=(const Polynomial &other) {
     return *this;
 }
 
+//todo change p
 Polynomial Polynomial::RemoveZeros(const Polynomial &p) {
     if (p.array == nullptr)
         return p;
@@ -314,6 +315,7 @@ int& Polynomial::operator[](int i){
     return this->array[i - this->minPwr];
 }
 
+//todo get O(n)
 double Polynomial::get(int i) const {
     double ans = 0;
     for (int j = this->minPwr; j <= this->maxPwr; j++) {
