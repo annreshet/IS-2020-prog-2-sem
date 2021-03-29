@@ -55,28 +55,27 @@ Polynomial &Polynomial::operator=(const Polynomial &other) {
     return *this;
 }
 
-//todo change p
-Polynomial Polynomial::RemoveZeros(const Polynomial &p) {
+//fixed change p
+Polynomial Polynomial::RemoveZeros(Polynomial p) {
     if (p.array == nullptr)
         return p;
-    Polynomial temp = p;
     int cnt1 = 0;
-    int cnt2 = temp.getSize() - 1;
-    while (temp.array[cnt1] == 0){
-        temp.minPwr++;
+    int cnt2 = p.getSize() - 1;
+    while (p.array[cnt1] == 0){
+        p.minPwr++;
         cnt1++;
     }
-    while (temp.array[cnt2] == 0) {
-        temp.maxPwr--;
+    while (p.array[cnt2] == 0) {
+        p.maxPwr--;
         cnt2--;
     }
-    int* newArr = new int[temp.getSize()] {0};
+    int* newArr = new int[p.getSize()] {0};
     for (int i = cnt1; i <= cnt2; i++) {
-        newArr[i - cnt1] = temp.array[i];
+        newArr[i - cnt1] = p.array[i];
     }
-    delete[] temp.array;
-    temp.array = newArr;
-    return temp;
+    delete[] p.array;
+    p.array = newArr;
+    return p;
 }
 
 bool Polynomial::operator==(const Polynomial &other) {
@@ -167,7 +166,9 @@ Polynomial operator+(const Polynomial &first, const Polynomial &second) {
 }
 
 Polynomial operator-(const Polynomial &first, const Polynomial &second) {
-    return first + -second;
+    Polynomial ans = first;
+    ans -= second;
+    return ans;
 }
 
 Polynomial operator*(const Polynomial &first, const Polynomial &second) {
@@ -218,7 +219,7 @@ std::ostream& operator<<(std::ostream& ss, const Polynomial& p){
     else {
         int newMaxPwr = p.maxPwr;
         while (p.array[newMaxPwr - p.minPwr] == 0) {
-           newMaxPwr -= 1;
+            newMaxPwr -= 1;
         }
         if (newMaxPwr > 1 || newMaxPwr < 0) {
             if (p.array[newMaxPwr - p.minPwr] == -1)
@@ -315,11 +316,14 @@ int& Polynomial::operator[](int i){
     return this->array[i - this->minPwr];
 }
 
-//todo get O(n)
+//fixed get O(n)
 double Polynomial::get(int i) const {
-    double ans = 0;
-    for (int j = this->minPwr; j <= this->maxPwr; j++) {
-        ans += array[j - this->minPwr] * pow(i, j);
+    int newMinPwr = 0;
+    int newMaxPwr = this->maxPwr - this->minPwr;
+    double ans = this->array[getSize() - 1] * i + this->array[getSize() - 2];
+    for (int j = newMaxPwr - 2; j >= newMinPwr; j--) {
+        ans = ans * i + this->array[j - newMinPwr];
     }
+    ans *= pow(i, this->minPwr);
     return ans;
 }
