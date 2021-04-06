@@ -72,8 +72,10 @@ void Polynomial::RemoveZeros() {
 
 bool Polynomial::operator==(const Polynomial &other) {
     if (this != &other) {
-        Polynomial first = RemoveZeros(*this);
-        Polynomial second = RemoveZeros(other);
+        Polynomial first = *this;
+        Polynomial second = other;
+        first.RemoveZeros();
+        second.RemoveZeros();
         if ((first.minPwr == 0 && first.maxPwr == 0) || (second.minPwr == 0 && second.maxPwr == 0)) {
             if (first.minPwr == 0 && first.maxPwr == 0 && second.minPwr == 0 && second.maxPwr == 0)
                 return true;
@@ -197,7 +199,8 @@ Polynomial Polynomial::operator*=(const Polynomial &other) const {
 Polynomial Polynomial::operator/(int number) {
     Polynomial temp = *this;
     std::for_each(temp.array, temp.array + temp.getSize(), [number](int &i) { i /= number; });
-    return RemoveZeros(temp);
+    temp.RemoveZeros();
+    return temp;
 }
 
 Polynomial Polynomial::operator/=(int number) {
@@ -308,6 +311,7 @@ int& Polynomial::operator[](int i){
     return this->array[i - this->minPwr];
 }
 
+//fixed get O(n)
 double Polynomial::get(int i) const {
     int newMinPwr = 0;
     int newMaxPwr = this->maxPwr - this->minPwr;
