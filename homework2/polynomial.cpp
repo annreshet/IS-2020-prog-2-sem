@@ -55,28 +55,19 @@ Polynomial &Polynomial::operator=(const Polynomial &other) {
     return *this;
 }
 
-//todo too many object copying
+//fixed too many object copying
 //Polynomail&
-Polynomial Polynomial::RemoveZeros(Polynomial p) {
-    if (p.array == nullptr)
-        return p;
+void Polynomial::RemoveZeros() {
     int cnt1 = 0;
-    int cnt2 = p.getSize() - 1;
-    while (p.array[cnt1] == 0){
-        p.minPwr++;
+    int cnt2 = getSize() - 1;
+    while (array[cnt1] == 0){
+        minPwr++;
         cnt1++;
     }
-    while (p.array[cnt2] == 0) {
-        p.maxPwr--;
+    while (array[cnt2] == 0) {
+        maxPwr--;
         cnt2--;
     }
-    int* newArr = new int[p.getSize()] {0};
-    for (int i = cnt1; i <= cnt2; i++) {
-        newArr[i - cnt1] = p.array[i];
-    }
-    delete[] p.array;
-    p.array = newArr;
-    return p;
 }
 
 bool Polynomial::operator==(const Polynomial &other) {
