@@ -55,7 +55,8 @@ Polynomial &Polynomial::operator=(const Polynomial &other) {
     return *this;
 }
 
-//fixed change p
+//todo too many object copying
+//Polynomail&
 Polynomial Polynomial::RemoveZeros(Polynomial p) {
     if (p.array == nullptr)
         return p;
@@ -316,7 +317,6 @@ int& Polynomial::operator[](int i){
     return this->array[i - this->minPwr];
 }
 
-//fixed get O(n)
 double Polynomial::get(int i) const {
     int newMinPwr = 0;
     int newMaxPwr = this->maxPwr - this->minPwr;
