@@ -1,0 +1,16 @@
+Pulling https://github.com/annreshet/IS-2020-prog-2-sem/homework2
+Pull finished
+polynomial.cpp:59:12: error: no declaration matches 'Polynomial Polynomial::RemoveZeros(Polynomial)'
+   59 | Polynomial Polynomial::RemoveZeros(Polynomial p) {
+      |            ^~~~~~~~~~
+In file included from polynomial.cpp:1:
+polynomial.h:19:23: note: candidate is: 'static Polynomial Polynomial::RemoveZeros(const Polynomial&)'
+   19 |     static Polynomial RemoveZeros(const Polynomial &p);
+      |                       ^~~~~~~~~~~
+polynomial.h:7:7: note: 'class Polynomial' defined here
+    7 | class Polynomial {
+      |       ^~~~~~~~~~
+make: *** [makefile:2: all] Error 1
+
+
+
