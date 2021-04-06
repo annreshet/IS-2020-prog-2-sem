@@ -9,6 +9,7 @@ private:
     int minPwr;
     int maxPwr;
     int* array;
+    static Polynomial RemoveZeros(Polynomial p);
 public:
     int getSize() const;
     Polynomial();
@@ -16,7 +17,6 @@ public:
     Polynomial(const Polynomial &other);
     virtual ~Polynomial();
     Polynomial& operator=(const Polynomial &other);
-    static Polynomial RemoveZeros(const Polynomial &p);
     bool operator==(const Polynomial &other);
     bool operator!=(const Polynomial &other);
     Polynomial operator-() const;
