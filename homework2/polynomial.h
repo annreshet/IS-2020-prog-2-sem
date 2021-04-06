@@ -9,7 +9,7 @@ private:
     int minPwr;
     int maxPwr;
     int* array;
-    static Polynomial RemoveZeros(Polynomial p);
+    void RemoveZeros();
 public:
     int getSize() const;
     Polynomial();
