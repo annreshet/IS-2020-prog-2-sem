@@ -41,7 +41,10 @@ Polynomial::~Polynomial() {
 Polynomial &Polynomial::operator=(const Polynomial &other) {
     if (this != &other) {
         if (other.array == nullptr) {
-            *this = Polynomial();
+            this->minPwr = 0;
+            this->maxPwr = 0;
+            this->array = nullptr;
+            return *this;
         }
         else {
             delete[] array;
@@ -172,36 +175,41 @@ Polynomial operator-(const Polynomial &first, const Polynomial &second) {
 }
 
 Polynomial operator*(const Polynomial &first, const Polynomial &second) {
-    Polynomial ans;
-    if (((first.minPwr == 0) && (first.maxPwr == 0)) || ((second.minPwr == 0) && (second.maxPwr == 0)))
-        return ans;
-    else {
-        ans.minPwr = first.minPwr + second.minPwr;
-        ans.maxPwr = first.maxPwr + second.maxPwr;
-        ans.array = new int[ans.getSize()] {0};
-        for (int i = first.minPwr; i <= first.maxPwr; i++) {
-            for (int j = second.minPwr; j <= second.maxPwr; j++) {
-                ans.array[i + j - ans.minPwr] += first.array[i - first.minPwr] * second.array[j - second.minPwr];
-            }
-        }
-        return ans;
-    }
-}
-
-Polynomial operator*(const Polynomial &p,  int number) {
-    Polynomial temp = p;
-    std::for_each(temp.array, temp.array + temp.getSize(), [number](int &i) {i *= number;} );
-    return temp;
+    Polynomial res = first;
+    res *= second;
+    return res;
 }
 
 Polynomial operator*(int number, const Polynomial &p) {
-    return p * number;
+    Polynomial num(0, 0, new int[1] {number});
+    Polynomial res = p;
+    res *= num;
+    return res;
 }
 
-//todo * from *=
-//todo returns Polynomial&
-Polynomial Polynomial::operator*=(const Polynomial &other) const {
-    return *this * other;
+Polynomial operator*(const Polynomial &p, int number) {
+    return number * p;
+}
+
+//fixed * from *=
+//fixed returns Polynomial&
+Polynomial& Polynomial::operator*=(const Polynomial &other) {
+    if (this->array == nullptr || other.array == nullptr) {
+        *this = Polynomial();
+        return *this;
+    }
+    int* temp = this->array;
+    int oldMinPwr = this->minPwr;
+    int oldMaxPwr = this->maxPwr;
+    this->minPwr = this->minPwr + other.minPwr;
+    this->maxPwr = this->maxPwr + other.maxPwr;
+    this->array = new int[this->getSize()] {0};
+    for (int i = oldMinPwr; i <= oldMaxPwr; i++) {
+        for (int j = other.minPwr; j <= other.maxPwr; j++) {
+            this->array[i + j - this->minPwr] += temp[i - oldMinPwr] * other.array[j - other.minPwr];
+        }
+    }
+    return *this;
 }
 
 Polynomial Polynomial::operator/(int number) {
