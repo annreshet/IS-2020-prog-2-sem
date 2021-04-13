@@ -26,7 +26,7 @@ public:
     friend Polynomial operator*(const Polynomial &p, int number);
     friend Polynomial operator*(int number, const Polynomial &p);
     friend Polynomial operator*(const Polynomial &first, const Polynomial &second);
-    Polynomial operator*=(const Polynomial &other) const;
+    Polynomial& operator*=(const Polynomial &other);
     Polynomial operator/(int number);
     Polynomial operator/=(int number);
     friend std::ostream& operator<<(std::ostream& ss, const Polynomial& p);
