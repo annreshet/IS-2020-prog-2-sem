@@ -58,17 +58,23 @@ Polynomial &Polynomial::operator=(const Polynomial &other) {
 //fixed too many object copying
 //Polynomail&
 void Polynomial::RemoveZeros() {
-    int cnt1 = 0;
-    int cnt2 = getSize() - 1;
-    while (array[cnt1] == 0){
-        minPwr++;
-        cnt1++;
-    }
-    while (array[cnt2] == 0) {
-        maxPwr--;
-        cnt2--;
+    if (array != nullptr) {
+        int cnt1 = 0;
+        int cnt2 = getSize() - 1;
+        while (array[cnt1] == 0){
+            minPwr++;
+            cnt1++;
+        }
+        while (array[cnt2] == 0) {
+            maxPwr--;
+            cnt2--;
+        }
+        if (minPwr == maxPwr) {
+            array[0] = array[cnt1];
+        }
     }
 }
+
 
 bool Polynomial::operator==(const Polynomial &other) {
     if (this != &other) {
@@ -208,8 +214,12 @@ Polynomial Polynomial::operator/=(int number) {
 }
 
 std::ostream& operator<<(std::ostream& ss, const Polynomial& p){
-    if (p.maxPwr == 0 && p.minPwr == 0) {
+    if (p.array == nullptr) {
         ss << 0;
+        return ss;
+    }
+    if (p.maxPwr == p.minPwr) {
+        ss << p.array[0];
     }
     else {
         int newMaxPwr = p.maxPwr;
