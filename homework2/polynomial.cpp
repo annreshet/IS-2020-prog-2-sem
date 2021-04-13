@@ -198,6 +198,8 @@ Polynomial operator*(int number, const Polynomial &p) {
     return p * number;
 }
 
+//todo * from *=
+//todo returns Polynomial&
 Polynomial Polynomial::operator*=(const Polynomial &other) const {
     return *this * other;
 }
