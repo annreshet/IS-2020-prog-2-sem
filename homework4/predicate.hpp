@@ -46,6 +46,8 @@ bool oneOf(TIterator begin, TIterator end, UnaryPredicate pred) {
     return cnt == 1? true:false;
 }
 
+
+//todo use default template argument std::less
 template<class TIterator, typename UnaryPredicate>
 bool isSorted(TIterator begin, TIterator end, UnaryPredicate pred) {
     for (; begin != end - 1; begin++) {
