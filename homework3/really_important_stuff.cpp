@@ -1,5 +1,9 @@
 #include "really_important_stuff.h"
 
+//todo very much copy-paste
+//todo use range-based for
+//todo dont use first second: auto [x, y]
+
 std::vector<std::string> CreateArr(std::string r) {
     std::replace(r.begin(), r.end(), '.', ',');
     std::vector<std::string> add;
