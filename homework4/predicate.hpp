@@ -47,26 +47,13 @@ bool oneOf(TIterator begin, TIterator end, UnaryPredicate pred) {
 }
 
 
-//todo use default template argument std::less
-template<class TIterator, typename UnaryPredicate>
-bool isSorted(TIterator begin, TIterator end, UnaryPredicate pred) {
+template <typename TIterator, typename TCompare = std::less<>>
+bool isSorted(TIterator begin, TIterator end, TCompare pred = TCompare()) {
     for (; begin != end - 1; begin++) {
         if (!pred(*begin, *(begin + 1)))
             return false;
     }
     return true;
-}
-
-template<class TIterator>
-bool isSorted(TIterator begin, TIterator end) {
-    bool r = true;
-    for (; begin != end - 1; begin++) {
-        if (*begin > *(begin + 1)) {
-            r = false;
-            break;
-        }
-    }
-    return r;
 }
 
 template<class TIterator, typename UnaryPredicate>
@@ -104,8 +91,8 @@ TIterator findBackward(TIterator begin, TIterator end, const T& value) {
     return it;
 }
 
-template<class TIterator, typename UnaryPredicate>
-bool isPalindrome(TIterator begin, TIterator end, UnaryPredicate pred) {
+template<class TIterator, typename BinaryPredicate>
+bool isPalindrome(TIterator begin, TIterator end, BinaryPredicate pred) {
     auto it = end;
     end--;
     while (begin != end && begin != it) {
