@@ -6,12 +6,16 @@
 #include <algorithm>
 #include <cmath>
 
+struct XY {
+    double x, y;
+};
+
 class TS
 {
 public:
     std::string number, type_of_vehicle, name_stopping, the_official_name;
     std::vector <std::string> routes, location;
-    std::pair <double, double> coordinates;
+    XY coordinates;
 };
 
 std::vector<TS> Parsing();
