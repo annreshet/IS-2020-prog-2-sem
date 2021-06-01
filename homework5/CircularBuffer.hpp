@@ -125,24 +125,23 @@ public:
         return *this;
     }
 
-    void ThrowingExceptionsYaaay(int size){
+    T first() {
         if (size == 0) {
             std::string ex = "Buffer is empty";
             throw std::out_of_range(ex);
         }
-    }
-
-    T first() {
-        ThrowingExceptionsYaaay(size);
         return elements[Begin];
     }
 
     T last() {
-        ThrowingExceptionsYaaay(size);
+        if (size == 0) {
+            std::string ex = "Buffer is empty";
+            throw std::out_of_range(ex);
+        }
         return elements[(Begin + size - 1) % capacity];
     }
 
-    void ThrowingExceptionsAllOverThePlace(int size, int i) {
+    T operator [] (int i) const {
         std::string ex;
         if (i >= size) {
             ex = "You have put index " + std::to_string(i) + " which is bigger then buffer size "
@@ -157,15 +156,24 @@ public:
             ex = "You have put index " + std::to_string(i) + " which is less then zero";
             throw std::out_of_range(ex);
         }
-    }
-
-    T operator [] (int i) const {
-        ThrowingExceptionsAllOverThePlace(size, i);
         return elements[(Begin + i) % capacity];
     }
 
     T& operator [] (int i) {
-        ThrowingExceptionsAllOverThePlace(size, i);
+        std::string ex;
+        if (i >= size) {
+            ex = "You have put index " + std::to_string(i) + " which is bigger then buffer size "
+                 + std::to_string(size);
+            throw std::out_of_range(ex);
+        }
+        if (size == 0) {
+            ex = "Buffer is empty";
+            throw std::out_of_range(ex);
+        }
+        if (i < 0) {
+            ex = "You have put index " + std::to_string(i) + " which is less then zero";
+            throw std::out_of_range(ex);
+        }
         return elements[(Begin + i) % capacity];
     }
 
