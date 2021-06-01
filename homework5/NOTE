@@ -1,0 +1,15 @@
+Pulling https://github.com/annreshet/IS-2020-prog-2-sem/homework5
+Pull finished
+In file included from main.cpp:10:
+CircularBuffer.hpp: In instantiation of 'T CircularBuffer<T>::operator[](int) const [with T = int]':
+main.cpp:144:12:   required from here
+CircularBuffer.hpp:163:9: error: passing 'const CircularBuffer<int>' as 'this' argument discards qualifiers [-fpermissive]
+  163 |         ThrowingExceptionsAllOverThePlace(size, i);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CircularBuffer.hpp:145:10: note:   in call to 'void CircularBuffer<T>::ThrowingExceptionsAllOverThePlace(int, int) [with T = int]'
+  145 |     void ThrowingExceptionsAllOverThePlace(int size, int i) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [makefile:2: all] Error 1
+
+
+
